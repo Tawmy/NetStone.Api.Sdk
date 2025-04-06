@@ -10,26 +10,18 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<AccessTokenProvider>(_ => new AccessTokenProvider(options));
 
-        services.AddRefitClient<INetStoneApiCharacter>(ConfigureAuthorizationHeader)
-            .ConfigureHttpClient(ConfigureBaseAddress);
+        services.AddConfiguredRefitClient<INetStoneApiCharacter>(options.ApiBaseAddress);
+        services.AddConfiguredRefitClient<INetStoneApiFreeCompany>(options.ApiBaseAddress);
+    }
 
-        services.AddRefitClient<INetStoneApiFreeCompany>(ConfigureAuthorizationHeader)
-            .ConfigureHttpClient(ConfigureBaseAddress);
-
-        return;
-
-        RefitSettings? ConfigureAuthorizationHeader(IServiceProvider x)
-        {
-            return new RefitSettings
+    private static void AddConfiguredRefitClient<T>(this IServiceCollection services, Uri baseAddress) where T : class
+    {
+        services.AddRefitClient<T>(x => new RefitSettings
             {
                 AuthorizationHeaderValueGetter = async (_, cancellationToken) =>
                     await x.GetRequiredService<AccessTokenProvider>().GetAccessTokenAsync(cancellationToken)
-            };
-        }
-
-        void ConfigureBaseAddress(HttpClient x)
-        {
-            x.BaseAddress = options.ApiBaseAddress;
-        }
+            })
+            .ConfigureHttpClient(x => x.BaseAddress = baseAddress)
+            .AddStandardResilienceHandler();
     }
 }
