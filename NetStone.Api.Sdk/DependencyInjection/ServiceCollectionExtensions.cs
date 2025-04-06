@@ -6,7 +6,7 @@ namespace NetStone.Api.Sdk.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddNetStoneApiClient(this IServiceCollection services, NetStoneApiOptions options)
+    public static void AddNetStoneApi(this IServiceCollection services, NetStoneApiOptions options)
     {
         services.AddSingleton<AccessTokenProvider>(_ => new AccessTokenProvider(options));
 

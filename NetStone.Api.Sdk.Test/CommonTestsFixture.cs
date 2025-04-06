@@ -22,7 +22,7 @@ public class CommonTestsFixture : TestBedFixture
         var options = new NetStoneApiOptions(apiBaseAddress, authAuthority, authClientId, authClientSecret,
             authScopesArray);
 
-        services.AddNetStoneApiClient(options);
+        services.AddNetStoneApi(options);
     }
 
     protected override IEnumerable<TestAppSettings> GetTestAppSettings()
