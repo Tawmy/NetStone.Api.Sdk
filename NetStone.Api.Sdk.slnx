@@ -1,3 +1,4 @@
 ﻿<Solution>
     <Project Path="NetStone.Api.Sdk\NetStone.Api.Sdk.csproj" Type="Classic C#"/>
+    <Project Path="NetStone.Common\NetStone.Common\NetStone.Common.csproj" Type="Classic C#"/>
 </Solution>
