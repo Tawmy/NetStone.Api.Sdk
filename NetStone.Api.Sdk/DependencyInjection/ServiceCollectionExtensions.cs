@@ -22,6 +22,11 @@ public static class ServiceCollectionExtensions
                     await x.GetRequiredService<AccessTokenProvider>().GetAccessTokenAsync(cancellationToken)
             })
             .ConfigureHttpClient(x => x.BaseAddress = baseAddress)
-            .AddStandardResilienceHandler();
+            .AddStandardResilienceHandler(x =>
+            {
+                x.AttemptTimeout.Timeout = TimeSpan.FromSeconds(60);
+                x.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(180);
+                x.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(180);
+            });
     }
 }
