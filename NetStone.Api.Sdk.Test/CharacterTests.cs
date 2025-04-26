@@ -1,8 +1,7 @@
-using System.Net;
 using NetStone.Api.Sdk.Abstractions;
 using NetStone.Api.Sdk.Test.DataGenerators;
+using NetStone.Common.Exceptions;
 using NetStone.Common.Queries;
-using Refit;
 using Xunit.Abstractions;
 using Xunit.Microsoft.DependencyInjection.Abstracts;
 
@@ -33,9 +32,8 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     [Fact]
     public async Task ClientIsThrowingNotFoundException()
     {
-        var validationApiException = await Assert.ThrowsAsync<ValidationApiException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await _character.GetAsync("99999999", 0));
-        Assert.Equal(HttpStatusCode.NotFound, validationApiException.StatusCode);
     }
 
     [Theory]
@@ -53,10 +51,8 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
         if (lodestoneId is "45386124") // Testerinus Maximus, Phoenix)
         {
             // test character has no minions
-            var validationApiException = await Assert.ThrowsAsync<ValidationApiException>(async () =>
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _character.GetMinionsAsync(lodestoneId, 0));
-
-            Assert.Equal(HttpStatusCode.NotFound, validationApiException.StatusCode);
 
             return;
         }
@@ -72,10 +68,8 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
         if (lodestoneId is "45386124" or "28835226") // Testerinus Maximus; Hena Wilbert; both Phoenix)
         {
             // test characters have no mounts
-            var validationApiException = await Assert.ThrowsAsync<ValidationApiException>(async () =>
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _character.GetMountsAsync(lodestoneId, 0));
-
-            Assert.Equal(HttpStatusCode.NotFound, validationApiException.StatusCode);
 
             return;
         }
