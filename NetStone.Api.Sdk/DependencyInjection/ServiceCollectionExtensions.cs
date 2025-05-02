@@ -12,11 +12,12 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<AccessTokenProvider>(_ => new AccessTokenProvider(options));
 
-        services.AddConfiguredRefitClient<INetStoneApiCharacter>(options.ApiBaseAddress);
-        services.AddConfiguredRefitClient<INetStoneApiFreeCompany>(options.ApiBaseAddress);
+        services.AddConfiguredRefitClient<INetStoneApiCharacter>(options);
+        services.AddConfiguredRefitClient<INetStoneApiFreeCompany>(options);
     }
 
-    private static void AddConfiguredRefitClient<T>(this IServiceCollection services, Uri baseAddress) where T : class
+    private static void AddConfiguredRefitClient<T>(this IServiceCollection services, NetStoneApiOptions options)
+        where T : class
     {
         services.AddRefitClient<T>(x => new RefitSettings
             {
@@ -39,12 +40,12 @@ public static class ServiceCollectionExtensions
                     return new NetStoneException(msg);
                 }
             })
-            .ConfigureHttpClient(x => x.BaseAddress = baseAddress)
+            .ConfigureHttpClient(x => x.BaseAddress = options.ApiBaseAddress)
             .AddStandardResilienceHandler(x =>
             {
-                x.AttemptTimeout.Timeout = TimeSpan.FromSeconds(60);
-                x.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(180);
-                x.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(180);
+                x.AttemptTimeout.Timeout = TimeSpan.FromSeconds(options.RequestTimeout);
+                x.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(options.RequestTimeout * 3);
+                x.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(options.RequestTimeout * 3);
             });
     }
 }
