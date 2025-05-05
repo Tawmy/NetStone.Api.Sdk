@@ -18,6 +18,9 @@ public interface INetStoneApiCharacter
     Task<CharacterDtoV3> GetAsync(string lodestoneId, int? maxAge = null, FallbackType useFallback = FallbackType.None,
         CancellationToken cancellationToken = default);
 
+    [Get($"{Base}/ByName/{{name}}/{{world}}")]
+    Task<CharacterDtoV3> GetByNameAsync(string name, string world, CancellationToken cancellationToken = default);
+
     [Get($"{Base}/ClassJobs/{{lodestoneId}}")]
     Task<CharacterClassJobOuterDtoV3> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
         FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
