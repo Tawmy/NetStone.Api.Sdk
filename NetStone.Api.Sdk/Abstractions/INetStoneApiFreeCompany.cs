@@ -19,6 +19,9 @@ public interface INetStoneApiFreeCompany
         FallbackType useFallback = FallbackType.None,
         CancellationToken cancellationToken = default);
 
+    [Get($"{Base}/ByName/{{name}}/{{world}}")]
+    Task<FreeCompanyDtoV3> GetByNameAsync(string name, string world, CancellationToken cancellationToken = default);
+
     [Get($"{Base}/Members/{{lodestoneId}}")]
     Task<FreeCompanyMembersOuterDtoV3> GetMembersAsync(string lodestoneId, int? maxAge = null,
         FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
