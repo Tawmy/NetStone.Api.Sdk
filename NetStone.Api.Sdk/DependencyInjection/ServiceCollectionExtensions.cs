@@ -37,7 +37,8 @@ public static class ServiceCollectionExtensions
 
                     var content = await response.Content.ReadAsStringAsync();
                     var msg = $"{response.StatusCode} • {response.ReasonPhrase} • {content}";
-                    return new NetStoneException(msg);
+                    return new NetStoneException(msg, response.StatusCode, response.ReasonPhrase, response.Headers,
+                        response.RequestMessage!.Method, response.RequestMessage, response.Content.Headers, content);
                 }
             })
             .ConfigureHttpClient(x => x.BaseAddress = options.ApiBaseAddress)
