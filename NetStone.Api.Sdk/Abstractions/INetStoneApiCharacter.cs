@@ -15,22 +15,25 @@ public interface INetStoneApiCharacter
         CancellationToken cancellationToken = default);
 
     [Get($"{Base}/{{lodestoneId}}")]
-    Task<CharacterDtoV3> GetAsync(string lodestoneId, int? maxAge = null, FallbackType useFallback = FallbackType.None,
+    Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null, FallbackType useFallback = FallbackType.None,
         CancellationToken cancellationToken = default);
 
+    [Get($"{Base}/ByName/{{name}}/{{world}}")]
+    Task<CharacterDto> GetByNameAsync(string name, string world, CancellationToken cancellationToken = default);
+
     [Get($"{Base}/ClassJobs/{{lodestoneId}}")]
-    Task<CharacterClassJobOuterDtoV3> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
+    Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
         FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
 
     [Get($"{Base}/Minions/{{lodestoneId}}")]
-    Task<CollectionDtoV3<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
+    Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
         FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
 
     [Get($"{Base}/Mounts/{{lodestoneId}}")]
-    Task<CollectionDtoV3<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
+    Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
         FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
 
     [Get($"{Base}/Achievements/{{lodestoneId}}")]
-    Task<CharacterAchievementOuterDtoV3> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
+    Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
         FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
 }
