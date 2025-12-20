@@ -1,4 +1,7 @@
 using System.Net;
+using AspNetCoreExtensions;
+using AspNetCoreExtensions.Keycloak;
+using Duende.AccessTokenManagement;
 using Microsoft.Extensions.DependencyInjection;
 using NetStone.Api.Sdk.Abstractions;
 using Refit;
@@ -8,45 +11,50 @@ namespace NetStone.Api.Sdk.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddNetStoneApi(this IServiceCollection services, NetStoneApiOptions options)
+    extension(IServiceCollection services)
     {
-        services.AddSingleton<AccessTokenProvider>(_ => new AccessTokenProvider(options));
+        public void AddNetStoneApi(NetStoneApiOptions options)
+        {
+            var kc = KeycloakConfiguration.WithSignedJwt(options.AuthAuthority.ToString(), options.AuthClientId,
+                options.CertificatePath, options.PrivateKeyPath, options.AuthScopes);
 
-        services.AddConfiguredRefitClient<INetStoneApiCharacter>(options);
-        services.AddConfiguredRefitClient<INetStoneApiFreeCompany>(options);
-    }
+            services.AddKeycloakClientCredentials(kc);
+            services.AddConfiguredRefitClient<INetStoneApiCharacter>(options);
+            services.AddConfiguredRefitClient<INetStoneApiFreeCompany>(options);
+        }
 
-    private static void AddConfiguredRefitClient<T>(this IServiceCollection services, NetStoneApiOptions options)
-        where T : class
-    {
-        services.AddRefitClient<T>(x => new RefitSettings
-            {
-                AuthorizationHeaderValueGetter = async (_, cancellationToken) =>
-                    await x.GetRequiredService<AccessTokenProvider>().GetAccessTokenAsync(cancellationToken),
-                ExceptionFactory = async response =>
+        private void AddConfiguredRefitClient<T>(NetStoneApiOptions options)
+            where T : class
+        {
+            services.AddRefitClient<T>(_ => new RefitSettings
                 {
-                    if (response.IsSuccessStatusCode)
+                    ExceptionFactory = async response =>
                     {
-                        return null;
-                    }
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return null;
+                        }
 
-                    if (response.StatusCode is HttpStatusCode.NotFound)
-                    {
-                        return new NotFoundException();
-                    }
+                        if (response.StatusCode is HttpStatusCode.NotFound)
+                        {
+                            return new NotFoundException();
+                        }
 
-                    var content = await response.Content.ReadAsStringAsync();
-                    var msg = $"{response.StatusCode} • {response.ReasonPhrase} • {content}";
-                    return new NetStoneException(msg, response.StatusCode, response.ReasonPhrase, response.Headers,
-                        response.RequestMessage!.Method, response.RequestMessage, response.Content.Headers, content);
-                }
-            })
-            .ConfigureHttpClient(x => x.BaseAddress = options.ApiBaseAddress)
-            .AddStandardResilienceHandler(x =>
-            {
-                x.AttemptTimeout.Timeout = TimeSpan.FromSeconds(options.RequestTimeout);
-                x.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(options.RequestTimeout * 3);
-                x.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(options.RequestTimeout * 3);
-            });
+                        var content = await response.Content.ReadAsStringAsync();
+                        var msg = $"{response.StatusCode} • {response.ReasonPhrase} • {content}";
+                        return new NetStoneException(msg, response.StatusCode, response.ReasonPhrase, response.Headers,
+                            response.RequestMessage!.Method, response.RequestMessage, response.Content.Headers,
+                            content);
+                    }
+                })
+                .ConfigureHttpClient(x => x.BaseAddress = options.ApiBaseAddress)
+                .AddClientCredentialsTokenHandler(ClientCredentialsClientName.Parse(options.AuthClientId))
+                .AddStandardResilienceHandler(x =>
+                {
+                    x.AttemptTimeout.Timeout = TimeSpan.FromSeconds(options.RequestTimeout);
+                    x.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(options.RequestTimeout * 3);
+                    x.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(options.RequestTimeout * 3);
+                });
+        }
     }
 }

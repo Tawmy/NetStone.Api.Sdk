@@ -21,15 +21,20 @@ public static class EnvironmentVariables
     public const string AuthClientId = "AUTH_CLIENT_ID";
 
     /// <summary>
+    ///     OAuth 2.0 signed JWT client authentication. Path to certificate.
+    /// </summary>
+    public const string AuthClientSignedJwtCertificate = "AUTH_CLIENT_SIGNED_JWT_CERTIFICATE";
+
+    /// <summary>
+    ///     OAuth 2.0 signed JWT client authentication. Path to private key.
+    /// </summary>
+    public const string AuthClientSignedJwtPrivateKey = "AUTH_CLIENT_SIGNED_JWT_PRIVATE_KEY";
+
+    /// <summary>
     ///     OAuth 2.0 client scopes.
     /// </summary>
     /// <remarks>
     ///     Scopes are divided with spaces.
     /// </remarks>
     public const string AuthScopes = "AUTH_SCOPES";
-
-    /// <summary>
-    ///     OAuth 2.0 client secret.
-    /// </summary>
-    public const string AuthClientSecret = "AUTH_CLIENT_SECRET";
 }

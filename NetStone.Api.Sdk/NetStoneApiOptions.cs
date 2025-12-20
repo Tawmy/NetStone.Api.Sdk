@@ -3,16 +3,30 @@ namespace NetStone.Api.Sdk;
 /// <summary>
 ///     Configuration for NetStone API.
 /// </summary>
-/// <param name="ApiBaseAddress">The base address of the NetStone API the client will connect to.</param>
-/// <param name="AuthAuthority">OAuth Authority URL, used to retrieve OAuth metadata.</param>
-/// <param name="AuthClientId">OAuth client ID.</param>
-/// <param name="AuthClientSecret">OAuth client secret.</param>
-/// <param name="AuthScopes">Authorization scopes to be submitted with request.</param>
-/// <param name="RequestTimeout">Timeout for requests in seconds.</param>
-public record NetStoneApiOptions(
-    Uri ApiBaseAddress,
-    Uri AuthAuthority,
-    string AuthClientId,
-    string AuthClientSecret,
-    string[] AuthScopes,
-    int RequestTimeout = 60);
+public record NetStoneApiOptions
+{
+    /// <summary>The base address of the NetStone API the client will connect to.</summary>
+    public required Uri ApiBaseAddress { get; init; }
+
+    /// <summary>OAuth Authority URL, used to retrieve OAuth metadata.</summary>
+    public required Uri AuthAuthority { get; init; }
+
+    /// <summary>OAuth client ID.</summary>
+    public required string AuthClientId { get; init; }
+
+    /// <summary>
+    ///     Path to certificate for signed JWT client authentication.
+    /// </summary>
+    public required string CertificatePath { get; init; }
+
+    /// <summary>
+    ///     Path to private key for signed JWT client authentication.
+    /// </summary>
+    public required string PrivateKeyPath { get; init; }
+
+    /// <summary>Authorization scopes to be submitted with request.</summary>
+    public string[] AuthScopes { get; init; } = [];
+
+    /// <summary>Timeout for requests in seconds.</summary>
+    public int RequestTimeout { get; init; } = 60;
+}

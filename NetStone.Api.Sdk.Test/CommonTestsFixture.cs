@@ -14,13 +14,21 @@ public class CommonTestsFixture : TestBedFixture
         var apiBaseAddress = EnvironmentVariableHelper.Get<Uri>(EnvironmentVariables.ApiBaseAddress);
         var authAuthority = EnvironmentVariableHelper.Get<Uri>(EnvironmentVariables.AuthAuthority);
         var authClientId = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientId);
-        var authClientSecret = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientSecret);
+        var authClientCert = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientSignedJwtCertificate);
+        var authClientKey = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientSignedJwtPrivateKey);
         var authScopes = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthScopes);
         var authScopesArray = authScopes.Split(" ",
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-        var options = new NetStoneApiOptions(apiBaseAddress, authAuthority, authClientId, authClientSecret,
-            authScopesArray);
+        var options = new NetStoneApiOptions
+        {
+            ApiBaseAddress = apiBaseAddress,
+            AuthAuthority = authAuthority,
+            AuthClientId = authClientId,
+            CertificatePath = authClientCert,
+            PrivateKeyPath = authClientKey,
+            AuthScopes = authScopesArray
+        };
 
         services.AddNetStoneApi(options);
     }
