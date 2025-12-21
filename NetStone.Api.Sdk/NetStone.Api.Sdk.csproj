@@ -4,12 +4,13 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyVersion>4.0.2</AssemblyVersion>
+        <AssemblyVersion>4.0.3</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj">
             <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+            <PrivateAssets>all</PrivateAssets>
         </ProjectReference>
     </ItemGroup>
 
