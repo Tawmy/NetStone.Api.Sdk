@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj"/>
+        <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj">
+            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+        </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
