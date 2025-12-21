@@ -4,6 +4,7 @@ using AspNetCoreExtensions.Keycloak;
 using Duende.AccessTokenManagement;
 using Microsoft.Extensions.DependencyInjection;
 using NetStone.Api.Sdk.Abstractions;
+using NetStone.Api.Sdk.Refit;
 using Refit;
 using NotFoundException = NetStone.Common.Exceptions.NotFoundException;
 
@@ -28,6 +29,7 @@ public static class ServiceCollectionExtensions
         {
             services.AddRefitClient<T>(_ => new RefitSettings
                 {
+                    UrlParameterFormatter = new RefitFlagEnumFormatter(),
                     ExceptionFactory = async response =>
                     {
                         if (response.IsSuccessStatusCode)
