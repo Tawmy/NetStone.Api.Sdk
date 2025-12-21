@@ -1,5 +1,6 @@
 using NetStone.Api.Sdk.Abstractions;
 using NetStone.Api.Sdk.Test.DataGenerators;
+using NetStone.Common.Enums;
 using NetStone.Common.Exceptions;
 using NetStone.Common.Queries;
 using Xunit.Abstractions;
@@ -25,7 +26,8 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     [ClassData(typeof(CharacterDataGenerator))]
     public async Task ClientIsReceivingCharacters(string lodestoneId)
     {
-        var result = await _character.GetAsync(lodestoneId, 0);
+        var result = await _character.GetAsync(lodestoneId, 0,
+            FallbackTypeV4.LodestoneUnavailable | FallbackTypeV4.ProfilePrivate);
         Assert.NotNull(result);
     }
 

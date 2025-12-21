@@ -5,7 +5,7 @@ using Refit;
 
 namespace NetStone.Api.Sdk.Abstractions;
 
-[Headers("Authorization: Bearer", "X-API-Version: 3")]
+[Headers("Authorization: Bearer", "X-API-Version: 4")]
 public interface INetStoneApiCharacter
 {
     private const string Base = "/Character";
@@ -15,25 +15,25 @@ public interface INetStoneApiCharacter
         CancellationToken cancellationToken = default);
 
     [Get($"{Base}/{{lodestoneId}}")]
-    Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null, FallbackType useFallback = FallbackType.None,
-        CancellationToken cancellationToken = default);
+    Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null,
+        FallbackTypeV4 useFallback = FallbackTypeV4.None, CancellationToken cancellationToken = default);
 
-    [Get($"{Base}/ByName/{{name}}/{{world}}")]
+    [Get($"{Base}/{{world}}/{{name}}")]
     Task<CharacterDto> GetByNameAsync(string name, string world, CancellationToken cancellationToken = default);
 
-    [Get($"{Base}/ClassJobs/{{lodestoneId}}")]
+    [Get($"{Base}/{{lodestoneId}}/ClassJobs")]
     Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
-        FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
+        FallbackTypeV4 useFallback = FallbackTypeV4.None, CancellationToken cancellationToken = default);
 
-    [Get($"{Base}/Minions/{{lodestoneId}}")]
+    [Get($"{Base}/{{lodestoneId}}/Minions")]
     Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
-        FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
+        FallbackTypeV4 useFallback = FallbackTypeV4.None, CancellationToken cancellationToken = default);
 
-    [Get($"{Base}/Mounts/{{lodestoneId}}")]
+    [Get($"{Base}/{{lodestoneId}}/Mounts")]
     Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
-        FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
+        FallbackTypeV4 useFallback = FallbackTypeV4.None, CancellationToken cancellationToken = default);
 
-    [Get($"{Base}/Achievements/{{lodestoneId}}")]
+    [Get($"{Base}/{{lodestoneId}}/Achievements")]
     Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
-        FallbackType useFallback = FallbackType.None, CancellationToken cancellationToken = default);
+        FallbackTypeV4 useFallback = FallbackTypeV4.None, CancellationToken cancellationToken = default);
 }
