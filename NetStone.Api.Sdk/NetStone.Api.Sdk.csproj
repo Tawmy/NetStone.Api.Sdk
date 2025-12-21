@@ -4,7 +4,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyVersion>4.0.4</AssemblyVersion>
+        <AssemblyVersion>4.0.5</AssemblyVersion>
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeProjectReferenceDefinitions</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
 
@@ -12,7 +12,7 @@
         <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj" PrivateAssets="all"/>
     </ItemGroup>
 
-    <Target Name="IncludeProjectReferenceDefinitions" BeforeTargets="_GetBuildOutputFilesWithTfm">
+    <Target Name="IncludeProjectReferenceDefinitions" BeforeTargets="_GetBuildOutputFilesWithTfm" Condition="'$(BuildingPackage)' != 'true'">
         <ItemGroup>
             <BuildOutputInPackage Include="$(OutputPath)NetStone.Common.dll"/>
             <BuildOutputInPackage Include="$(OutputPath)NetStone.Common.xml" Condition="Exists('$(OutputPath)NetStone.Common.xml')"/>
