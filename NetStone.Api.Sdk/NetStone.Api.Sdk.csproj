@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj">
             <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+            <PrivateAssets>all</PrivateAssets>
         </ProjectReference>
     </ItemGroup>
 
