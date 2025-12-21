@@ -4,18 +4,24 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyVersion>4.0.3</AssemblyVersion>
+        <AssemblyVersion>4.0.4</AssemblyVersion>
+        <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeProjectReferenceDefinitions</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj">
-            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-            <PrivateAssets>all</PrivateAssets>
-        </ProjectReference>
+        <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj" PrivateAssets="all"/>
     </ItemGroup>
+
+    <Target Name="IncludeProjectReferenceDefinitions" BeforeTargets="_GetBuildOutputFilesWithTfm">
+        <ItemGroup>
+            <BuildOutputInPackage Include="$(OutputPath)NetStone.Common.dll"/>
+            <BuildOutputInPackage Include="$(OutputPath)NetStone.Common.xml" Condition="Exists('$(OutputPath)NetStone.Common.xml')"/>
+        </ItemGroup>
+    </Target>
 
     <ItemGroup>
         <PackageReference Include="Duende.AccessTokenManagement" Version="4.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1"/>
         <PackageReference Include="Refit" Version="9.0.2"/>
         <PackageReference Include="Refit.HttpClientFactory" Version="9.0.2"/>
         <PackageReference Include="Tawmy.AspNetCoreExtensions" Version="1.1.0"/>
