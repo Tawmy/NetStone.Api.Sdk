@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetStone.Api.Sdk.DependencyInjection;
-using NetStone.Common.Helpers;
 using Xunit.Microsoft.DependencyInjection;
 using Xunit.Microsoft.DependencyInjection.Abstracts;
 
@@ -11,12 +10,17 @@ public class CommonTestsFixture : TestBedFixture
 {
     protected override void AddServices(IServiceCollection services, IConfiguration? configuration)
     {
-        var apiBaseAddress = EnvironmentVariableHelper.Get<Uri>(EnvironmentVariables.ApiBaseAddress);
-        var authAuthority = EnvironmentVariableHelper.Get<Uri>(EnvironmentVariables.AuthAuthority);
-        var authClientId = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientId);
-        var authClientCert = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientSignedJwtCertificate);
-        var authClientKey = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthClientSignedJwtPrivateKey);
-        var authScopes = EnvironmentVariableHelper.Get(EnvironmentVariables.AuthScopes);
+        var apiBaseAddress = new Uri(Environment.GetEnvironmentVariable(EnvironmentVariables.ApiBaseAddress) ??
+                                     throw new ArgumentNullException(EnvironmentVariables.ApiBaseAddress));
+        var authAuthority = new Uri(Environment.GetEnvironmentVariable(EnvironmentVariables.AuthAuthority) ??
+                                    throw new ArgumentNullException(EnvironmentVariables.AuthAuthority));
+        var authClientId = Environment.GetEnvironmentVariable(EnvironmentVariables.AuthClientId) ??
+                           throw new ArgumentNullException(EnvironmentVariables.AuthClientId);
+        var authClientCert = Environment.GetEnvironmentVariable(EnvironmentVariables.AuthClientSignedJwtCertificate) ??
+                             throw new ArgumentNullException(EnvironmentVariables.AuthClientSignedJwtCertificate);
+        var authClientKey = Environment.GetEnvironmentVariable(EnvironmentVariables.AuthClientSignedJwtPrivateKey) ??
+                            throw new ArgumentNullException(EnvironmentVariables.AuthClientSignedJwtPrivateKey);
+        var authScopes = Environment.GetEnvironmentVariable(EnvironmentVariables.AuthScopes) ?? string.Empty;
         var authScopesArray = authScopes.Split(" ",
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
