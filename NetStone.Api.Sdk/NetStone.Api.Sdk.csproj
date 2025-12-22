@@ -11,13 +11,18 @@
     <ItemGroup>
         <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj"
                           PrivateAssets="all"
-                          Condition="'$(BuildingPackage)' != 'true'"/>
+                          ReferenceOutputAssembly="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="..\NetStone.Common\NetStone.Common\bin\$(Configuration)\net10.0\NetStone.Common.dll"/>
     </ItemGroup>
 
     <Target Name="IncludeProjectReferenceDefinitions" BeforeTargets="_GetBuildOutputFilesWithTfm">
         <ItemGroup>
-            <BuildOutputInPackage Include="$(OutputPath)NetStone.Common.dll"/>
-            <BuildOutputInPackage Include="$(OutputPath)NetStone.Common.xml" Condition="Exists('$(OutputPath)NetStone.Common.xml')"/>
+            <BuildOutputInPackage Include="..\NetStone.Common\NetStone.Common\bin\$(Configuration)\net10.0\NetStone.Common.dll"/>
+            <BuildOutputInPackage Include="..\NetStone.Common\NetStone.Common\bin\$(Configuration)\net10.0\NetStone.Common.xml"
+                                  Condition="Exists('..\NetStone.Common\NetStone.Common\bin\$(Configuration)\net10.0\NetStone.Common.xml')"/>
         </ItemGroup>
     </Target>
 
