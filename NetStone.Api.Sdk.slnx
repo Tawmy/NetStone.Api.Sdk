@@ -3,7 +3,6 @@
         <File Path=".github\workflows\publish.yml"/>
         <File Path="README.md"/>
     </Folder>
-    <Project Path="NetStone.Api.Sdk.Test\NetStone.Api.Sdk.Test.csproj" Type="C#"/>
-    <Project Path="NetStone.Api.Sdk\NetStone.Api.Sdk.csproj" Type="C#"/>
-    <Project Path="NetStone.Common\NetStone.Common\NetStone.Common.csproj" Type="C#"/>
+    <Project Path="NetStone.Api.Sdk.Test\NetStone.Api.Sdk.Test.csproj"/>
+    <Project Path="NetStone.Api.Sdk\NetStone.Api.Sdk.csproj"/>
 </Solution>

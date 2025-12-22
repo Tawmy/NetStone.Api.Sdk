@@ -30,7 +30,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\NetStone.Api.Sdk\NetStone.Api.Sdk.csproj"/>
-        <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj"/>
     </ItemGroup>
 
 </Project>

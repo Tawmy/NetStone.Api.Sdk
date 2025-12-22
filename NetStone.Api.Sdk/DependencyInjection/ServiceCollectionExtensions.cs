@@ -1,6 +1,6 @@
 using System.Net;
-using AspNetCoreExtensions;
 using AspNetCoreExtensions.Keycloak;
+using AspNetCoreExtensions.Keycloak.Options;
 using Duende.AccessTokenManagement;
 using Microsoft.Extensions.DependencyInjection;
 using NetStone.Api.Sdk.Abstractions;
