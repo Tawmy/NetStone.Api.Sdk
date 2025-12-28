@@ -29,8 +29,8 @@ public class CommonTestsFixture : TestBedFixture
             ApiBaseAddress = apiBaseAddress,
             AuthAuthority = authAuthority,
             AuthClientId = authClientId,
-            CertificatePath = authClientCert,
-            PrivateKeyPath = authClientKey,
+            AuthCertificatePath = authClientCert,
+            AuthPrivateKeyPath = authClientKey,
             AuthScopes = authScopesArray
         };
 

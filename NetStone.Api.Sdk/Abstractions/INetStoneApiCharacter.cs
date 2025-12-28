@@ -15,7 +15,7 @@ public interface INetStoneApiCharacter
         CancellationToken cancellationToken = default);
 
     [Get($"{Base}/{{lodestoneId}}")]
-    Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null,
+    Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null, bool cacheImages = false,
         FallbackTypeV4 useFallback = FallbackTypeV4.None, CancellationToken cancellationToken = default);
 
     [Get($"{Base}/{{world}}/{{name}}")]

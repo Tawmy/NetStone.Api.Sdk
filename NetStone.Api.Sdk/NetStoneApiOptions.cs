@@ -17,12 +17,12 @@ public record NetStoneApiOptions
     /// <summary>
     ///     Path to certificate for signed JWT client authentication.
     /// </summary>
-    public required string CertificatePath { get; init; }
+    public required string AuthCertificatePath { get; init; }
 
     /// <summary>
     ///     Path to private key for signed JWT client authentication.
     /// </summary>
-    public required string PrivateKeyPath { get; init; }
+    public required string AuthPrivateKeyPath { get; init; }
 
     /// <summary>Authorization scopes to be submitted with request.</summary>
     public string[] AuthScopes { get; init; } = [];

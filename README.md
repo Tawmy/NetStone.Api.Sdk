@@ -27,13 +27,14 @@ However you initialise this instance is up to you, but please do store this conf
 
 NetStone API uses OAuth 2.0 Client Credentials for authorization.
 
-| Parameter        | Explanation                                                      | Example                                     |
-|------------------|------------------------------------------------------------------|---------------------------------------------|
-| ApiBaseAddress   | The base address of the NetStone API the client will connect to. | https://netstone.api.tawmy.net              |
-| AuthAuthority    | OAuth Authority URL, used to retrieve OAuth metadata.            | https://mydomain.net/realms/myKeycloakRealm |
-| AuthClientId     | OAuth client ID.                                                 | my-client-id                                |
-| AuthClientSecret | OAuth client secret.                                             | randomly-generated-and-secure-secret        |
-| AuthScopes       | Authorization scopes to be submitted with request.               | netstone.api (optional)                     |
+| Parameter           | Explanation                                                      | Example                                     |
+|---------------------|------------------------------------------------------------------|---------------------------------------------|
+| ApiBaseAddress      | The base address of the NetStone API the client will connect to. | https://netstone.api.tawmy.net              |
+| AuthAuthority       | OAuth Authority URL, used to retrieve OAuth metadata.            | https://mydomain.net/realms/myKeycloakRealm |
+| AuthClientId        | OAuth client ID.                                                 | my-client-id                                |
+| AuthCertificatePath | OAuth signed JWT certificate path.                               | /mnt/cert/private.key                       |
+| AuthPrivateKeyPath  | OAuth signed JWT private key path.                               | /mnt/cert/certificate.pem                   |
+| AuthScopes          | Authorization scopes to be submitted with request.               | netstone.api (optional)                     |
 
 ### Retrieving Data
 
