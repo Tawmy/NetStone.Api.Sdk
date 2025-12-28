@@ -27,7 +27,7 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     public async Task ClientIsReceivingCharacters(string lodestoneId)
     {
         var result = await _character.GetAsync(lodestoneId, 0,
-            FallbackTypeV4.LodestoneUnavailable | FallbackTypeV4.ProfilePrivate);
+            useFallback: FallbackTypeV4.LodestoneUnavailable | FallbackTypeV4.ProfilePrivate);
         Assert.NotNull(result);
     }
 
