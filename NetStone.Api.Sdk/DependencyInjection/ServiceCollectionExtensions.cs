@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
         public void AddNetStoneApi(NetStoneApiOptions options)
         {
             var kc = KeycloakConfiguration.WithSignedJwt(options.AuthAuthority.ToString(), options.AuthClientId,
-                options.CertificatePath, options.PrivateKeyPath, options.AuthScopes);
+                options.AuthCertificatePath, options.AuthPrivateKeyPath, options.AuthScopes);
 
             services.AddKeycloakClientCredentials(kc);
             services.AddConfiguredRefitClient<INetStoneApiCharacter>(options);
