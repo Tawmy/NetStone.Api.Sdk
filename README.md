@@ -25,16 +25,16 @@ However you initialise this instance is up to you, but please do store this conf
 
 ### NetStoneApiOptions
 
-NetStone API uses OAuth 2.0 Client Credentials for authorization.
+NetStone API uses OAuth 2.0 Client Credentials with signed JWTs for authorization.
 
-| Parameter           | Explanation                                                      | Example                                     |
-|---------------------|------------------------------------------------------------------|---------------------------------------------|
-| ApiBaseAddress      | The base address of the NetStone API the client will connect to. | https://netstone.api.tawmy.net              |
-| AuthAuthority       | OAuth Authority URL, used to retrieve OAuth metadata.            | https://mydomain.net/realms/myKeycloakRealm |
-| AuthClientId        | OAuth client ID.                                                 | my-client-id                                |
-| AuthCertificatePath | OAuth signed JWT certificate path.                               | /mnt/cert/private.key                       |
-| AuthPrivateKeyPath  | OAuth signed JWT private key path.                               | /mnt/cert/certificate.pem                   |
-| AuthScopes          | Authorization scopes to be submitted with request.               | netstone.api (optional)                     |
+| Parameter           | Explanation                                                      | Example                        |
+|---------------------|------------------------------------------------------------------|--------------------------------|
+| ApiBaseAddress      | The base address of the NetStone API the client will connect to. | https://netstone.eorzea.online |
+| AuthAuthority       | OAuth Authority URL, used to retrieve OAuth metadata.            | https://ffxiv.id/realms/eorzea |
+| AuthClientId        | OAuth client ID.                                                 | netstone-api                   |
+| AuthCertificatePath | OAuth signed JWT certificate path.                               | /mnt/cert/private.key          |
+| AuthPrivateKeyPath  | OAuth signed JWT private key path.                               | /mnt/cert/certificate.pem      |
+| AuthScopes          | Authorization scopes to be submitted with request.               | netstone-api (optional)        |
 
 ### Retrieving Data
 
@@ -50,7 +50,7 @@ public class CharacterService(INetStoneApiCharacter apiCharacter) // Dependency 
             character = await apiCharacter.GetAsync(characterLodestoneId,
                 cancellationToken: cancellationToken);
         }
-        catch (ApiException)
+        catch (NetStoneException)
         {
             // handle exception
         }
