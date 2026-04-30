@@ -1,7 +1,6 @@
 using NetStone.Api.Sdk.Abstractions;
 using NetStone.Api.Sdk.Test.DataGenerators;
 using NetStone.Common.Queries;
-using Xunit.Abstractions;
 using Xunit.Microsoft.DependencyInjection.Abstracts;
 
 namespace NetStone.Api.Sdk.Test;
@@ -16,7 +15,7 @@ public class FreeCompanyTests(ITestOutputHelper testOutputHelper, CommonTestsFix
     [ClassData(typeof(FreeCompanySearchDataGenerator))]
     public async Task ClientIsReceivingFreeCompanySearch(FreeCompanySearchQuery query)
     {
-        var result = await _freeCompany.SearchAsync(query);
+        var result = await _freeCompany.SearchAsync(query, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
         Assert.True(result.HasResults);
     }
@@ -25,7 +24,8 @@ public class FreeCompanyTests(ITestOutputHelper testOutputHelper, CommonTestsFix
     [ClassData(typeof(FreeCompanyTestsDataGenerator))]
     public async Task ClientIsReceivingFreeCompanies(string lodestoneId)
     {
-        var result = await _freeCompany.GetAsync(lodestoneId, 0);
+        var result = await _freeCompany.GetAsync(lodestoneId, 0,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
     }
 
@@ -33,7 +33,8 @@ public class FreeCompanyTests(ITestOutputHelper testOutputHelper, CommonTestsFix
     [ClassData(typeof(FreeCompanyTestsDataGenerator))]
     public async Task ClientIsReceivingFreeCompanyMembers(string lodestoneId)
     {
-        var result = await _freeCompany.GetMembersAsync(lodestoneId, 0);
+        var result = await _freeCompany.GetMembersAsync(lodestoneId, 0,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
         Assert.NotEmpty(result.Members);
     }

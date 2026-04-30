@@ -4,7 +4,7 @@ using Refit;
 namespace NetStone.Api.Sdk.Refit;
 
 /// <summary>
-///     Refit does not support flags enums in query parameters by default. This smol formatter adds support for them.
+/// Refit does not support flags enums in query parameters by default. This smol formatter adds support for them.
 /// </summary>
 internal class RefitFlagEnumFormatter : DefaultUrlParameterFormatter
 {

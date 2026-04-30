@@ -1,7 +1,7 @@
 namespace NetStone.Api.Sdk;
 
 /// <summary>
-///     Configuration for NetStone API.
+/// Configuration for NetStone API.
 /// </summary>
 public record NetStoneApiOptions
 {
@@ -15,12 +15,12 @@ public record NetStoneApiOptions
     public required string AuthClientId { get; init; }
 
     /// <summary>
-    ///     Path to certificate for signed JWT client authentication.
+    /// Path to certificate for signed JWT client authentication.
     /// </summary>
     public required string AuthCertificatePath { get; init; }
 
     /// <summary>
-    ///     Path to private key for signed JWT client authentication.
+    /// Path to private key for signed JWT client authentication.
     /// </summary>
     public required string AuthPrivateKeyPath { get; init; }
 

@@ -3,7 +3,6 @@ using NetStone.Api.Sdk.Test.DataGenerators;
 using NetStone.Common.Enums;
 using NetStone.Common.Exceptions;
 using NetStone.Common.Queries;
-using Xunit.Abstractions;
 using Xunit.Microsoft.DependencyInjection.Abstracts;
 
 namespace NetStone.Api.Sdk.Test;
@@ -17,7 +16,7 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     [ClassData(typeof(CharacterSearchDataGenerator))]
     public async Task ClientIsReceivingCharacterSearch(CharacterSearchQuery query)
     {
-        var result = await _character.SearchAsync(query);
+        var result = await _character.SearchAsync(query, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
         Assert.True(result.HasResults);
     }
@@ -27,7 +26,8 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     public async Task ClientIsReceivingCharacters(string lodestoneId)
     {
         var result = await _character.GetAsync(lodestoneId, 0,
-            useFallback: FallbackTypeV4.LodestoneUnavailable | FallbackTypeV4.ProfilePrivate);
+            useFallback: FallbackTypeV4.LodestoneUnavailable | FallbackTypeV4.ProfilePrivate,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
     }
 
@@ -35,14 +35,15 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     public async Task ClientIsThrowingNotFoundException()
     {
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await _character.GetAsync("99999999", 0));
+            await _character.GetAsync("99999999", 0, cancellationToken: TestContext.Current.CancellationToken));
     }
 
     [Theory]
     [ClassData(typeof(CharacterDataGenerator))]
     public async Task ClientIsReceivingCharacterClassJobs(string lodestoneId)
     {
-        var result = await _character.GetClassJobsAsync(lodestoneId, 0);
+        var result = await _character.GetClassJobsAsync(lodestoneId, 0,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
     }
 
@@ -54,12 +55,14 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
         {
             // test character has no minions
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _character.GetMinionsAsync(lodestoneId, 0));
+                await _character.GetMinionsAsync(lodestoneId, 0,
+                    cancellationToken: TestContext.Current.CancellationToken));
 
             return;
         }
 
-        var result = await _character.GetMinionsAsync(lodestoneId, 0);
+        var result = await _character.GetMinionsAsync(lodestoneId, 0,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
     }
 
@@ -71,12 +74,14 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
         {
             // test characters have no mounts
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _character.GetMountsAsync(lodestoneId, 0));
+                await _character.GetMountsAsync(lodestoneId, 0,
+                    cancellationToken: TestContext.Current.CancellationToken));
 
             return;
         }
 
-        var result = await _character.GetMountsAsync(lodestoneId, 0);
+        var result = await _character.GetMountsAsync(lodestoneId, 0,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
     }
 
@@ -84,7 +89,8 @@ public class CharacterTests(ITestOutputHelper testOutputHelper, CommonTestsFixtu
     [ClassData(typeof(CharacterDataGenerator))]
     public async Task ClientIsReceivingCharacterAchievements(string lodestoneId)
     {
-        var result = await _character.GetAchievementsAsync(lodestoneId, 0);
+        var result = await _character.GetAchievementsAsync(lodestoneId, 0,
+            cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
 
         // achievements seem to be private by default, so most of these lists are empty. test the ones that are not.
