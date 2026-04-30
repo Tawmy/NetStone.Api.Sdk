@@ -1,4 +1,6 @@
 using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using AspNetCoreExtensions.Keycloak;
 using AspNetCoreExtensions.Keycloak.Options;
 using Duende.AccessTokenManagement;
@@ -29,6 +31,13 @@ public static class ServiceCollectionExtensions
         {
             services.AddRefitClient<T>(_ => new RefitSettings
                 {
+                    ContentSerializer = new SystemTextJsonContentSerializer(new JsonSerializerOptions
+                    {
+                        // Workaround for breaking change in Refit 10.1.6. TODO check if this can be removed with future updates
+                        PropertyNameCaseInsensitive = true,
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        Converters = { new JsonStringEnumConverter() }
+                    }),
                     UrlParameterFormatter = new RefitFlagEnumFormatter(),
                     ExceptionFactory = async response =>
                     {
