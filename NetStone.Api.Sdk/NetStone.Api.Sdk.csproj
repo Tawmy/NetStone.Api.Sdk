@@ -10,8 +10,8 @@
     <ItemGroup>
         <PackageReference Include="Duende.AccessTokenManagement" Version="4.2.0"/>
         <PackageReference Include="NetStone.Api.Common" Version="1.2.1"/>
-        <PackageReference Include="Refit" Version="10.1.6"/>
-        <PackageReference Include="Refit.HttpClientFactory" Version="10.1.6"/>
+        <PackageReference Include="Refit" Version="10.2.0"/>
+        <PackageReference Include="Refit.HttpClientFactory" Version="10.2.0"/>
         <PackageReference Include="Tawmy.AspNetCoreExtensions.Keycloak" Version="1.0.4"/>
     </ItemGroup>
 
