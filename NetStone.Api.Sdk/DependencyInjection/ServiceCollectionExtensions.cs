@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
         private void AddConfiguredRefitClient<T>(NetStoneApiOptions options)
             where T : class
         {
-            services.AddRefitClient<T>(_ => new RefitSettings
+            services.AddRefitGeneratedClient<T>(_ => new RefitSettings
                 {
                     ContentSerializer = new SystemTextJsonContentSerializer(new JsonSerializerOptions
                     {
